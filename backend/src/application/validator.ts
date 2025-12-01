@@ -86,7 +86,7 @@ export const validateCandidateData = (data: any) => {
     validateName(data.firstName); 
     validateName(data.lastName); 
     validateEmail(data.email);
-    validatePhone(data.phone);
+    //validatePhone(data.phone);
     validateAddress(data.address);
 
     if (data.educations) {

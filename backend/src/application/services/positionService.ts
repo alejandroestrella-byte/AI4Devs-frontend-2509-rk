@@ -9,6 +9,55 @@ const calculateAverageScore = (interviews: any[]) => {
     return totalScore / interviews.length;
 };
 
+/**
+ * Obtiene todas las posiciones con información básica
+ */
+export const getAllPositionsService = async () => {
+    try {
+        const positions = await prisma.position.findMany({
+            select: {
+                id: true,
+                title: true,
+                status: true,
+                location: true,
+                employmentType: true,
+                applicationDeadline: true,
+                isVisible: true,
+                company: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
+                _count: {
+                    select: {
+                        applications: true,
+                    },
+                },
+            },
+            orderBy: {
+                id: 'desc',
+            },
+        });
+
+        return positions.map(position => ({
+            id: position.id,
+            title: position.title,
+            status: position.status,
+            location: position.location,
+            employmentType: position.employmentType,
+            applicationDeadline: position.applicationDeadline,
+            isVisible: position.isVisible,
+            company: position.company.name,
+            companyId: position.company.id,
+            applicationsCount: position._count.applications,
+        }));
+    } catch (error) {
+        console.error('Error fetching positions:', error);
+        throw new Error('Failed to fetch positions');
+    }
+};
+
 export const getCandidatesByPositionService = async (positionId: number) => {
     try {
         const applications = await prisma.application.findMany({

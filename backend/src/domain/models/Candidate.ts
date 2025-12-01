@@ -6,6 +6,28 @@ import { Application } from './Application';
 
 const prisma = new PrismaClient();
 
+/**
+ * Convierte una fecha en formato string a ISO-8601 DateTime
+ * Si la fecha ya es un objeto Date, lo retorna tal cual
+ * Si es un string sin hora, agrega la hora por defecto (00:00:00)
+ */
+const convertToDateTime = (date: string | Date | null | undefined): Date | null | undefined => {
+    if (!date) return date as null | undefined;
+    if (date instanceof Date) return date;
+    
+    // Si es un string en formato YYYY-MM-DD, agregar la hora
+    if (typeof date === 'string') {
+        // Si ya tiene hora, retornar como Date
+        if (date.includes('T') || date.includes(' ')) {
+            return new Date(date);
+        }
+        // Si solo tiene fecha, agregar hora por defecto
+        return new Date(`${date}T00:00:00.000Z`);
+    }
+    
+    return date;
+};
+
 export class Candidate {
     id?: number;
     firstName: string;
@@ -47,8 +69,8 @@ export class Candidate {
                 create: this.educations.map(edu => ({
                     institution: edu.institution,
                     title: edu.title,
-                    startDate: edu.startDate,
-                    endDate: edu.endDate
+                    startDate: convertToDateTime(edu.startDate),
+                    endDate: convertToDateTime(edu.endDate)
                 }))
             };
         }
@@ -60,8 +82,8 @@ export class Candidate {
                     company: exp.company,
                     position: exp.position,
                     description: exp.description,
-                    startDate: exp.startDate,
-                    endDate: exp.endDate
+                    startDate: convertToDateTime(exp.startDate),
+                    endDate: convertToDateTime(exp.endDate)
                 }))
             };
         }

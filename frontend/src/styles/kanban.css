@@ -1,0 +1,456 @@
+/**
+ * Estilos para el sistema Kanban
+ * Diseño responsive: Desktop, Tablet y Mobile
+ */
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+.kanban-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f5f7fa;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.kanban-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e1e8ed;
+}
+
+.kanban-back-button {
+  background: #ffffff;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 20px;
+}
+
+.kanban-back-button:hover {
+  background-color: #f5f7fa;
+  border-color: #0066cc;
+  transform: translateX(-2px);
+}
+
+.kanban-back-button:active {
+  transform: translateX(-4px);
+}
+
+.back-arrow {
+  color: #0066cc;
+  font-weight: bold;
+}
+
+.kanban-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* ========================================
+   TABLERO KANBAN
+   ======================================== */
+.kanban-board {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  min-height: 400px;
+}
+
+/* Scrollbar personalizado para desktop */
+.kanban-board::-webkit-scrollbar {
+  height: 8px;
+}
+
+.kanban-board::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* ========================================
+   COLUMNAS
+   ======================================== */
+.kanban-column {
+  flex: 0 0 300px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 200px);
+  transition: box-shadow 0.2s ease;
+}
+
+.kanban-column.drag-over {
+  box-shadow: 0 4px 16px rgba(0, 102, 204, 0.2);
+  border: 2px solid #0066cc;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e1e8ed;
+}
+
+.column-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  flex: 1;
+}
+
+.column-count {
+  background-color: #e1e8ed;
+  color: #5a6c7d;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.column-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+
+.column-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.column-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.column-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.column-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  padding: 20px;
+}
+
+.empty-message {
+  color: #9aa5b1;
+  font-style: italic;
+  text-align: center;
+  margin: 0;
+}
+
+/* ========================================
+   TARJETAS DE CANDIDATOS
+   ======================================== */
+.candidate-card {
+  background: #ffffff;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 12px;
+  cursor: grab;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.candidate-card:hover {
+  border-color: #0066cc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.candidate-card:active {
+  cursor: grabbing;
+}
+
+.candidate-card.dragging {
+  opacity: 0.5;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transform: rotate(2deg);
+}
+
+.candidate-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.candidate-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.candidate-score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.candidate-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  font-size: 16px;
+  color: #ffa500;
+}
+
+.star.empty {
+  color: #e1e8ed;
+}
+
+.score-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #5a6c7d;
+  margin-left: 4px;
+}
+
+/* ========================================
+   ESTADOS DE CARGA Y ERROR
+   ======================================== */
+.kanban-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e1e8ed;
+  border-top-color: #0066cc;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.kanban-loading p {
+  color: #5a6c7d;
+  font-size: 16px;
+  margin: 0;
+}
+
+.kanban-error {
+  background-color: #fff5f5;
+  border: 2px solid #feb2b2;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.kanban-error h2 {
+  color: #c53030;
+  margin: 0 0 10px 0;
+  font-size: 20px;
+}
+
+.kanban-error p {
+  color: #742a2a;
+  margin: 0 0 16px 0;
+}
+
+.retry-button {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.retry-button:hover {
+  background-color: #0052a3;
+}
+
+.drag-overlay-placeholder {
+  display: none;
+}
+
+/* ========================================
+   RESPONSIVE: TABLET (768px - 1024px)
+   ======================================== */
+@media (max-width: 1024px) {
+  .kanban-container {
+    padding: 16px;
+  }
+
+  .kanban-title {
+    font-size: 24px;
+  }
+
+  .kanban-column {
+    flex: 0 0 280px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE: MOBILE (< 768px)
+   ======================================== */
+@media (max-width: 767px) {
+  .kanban-container {
+    padding: 12px;
+  }
+
+  .kanban-header {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
+
+  .kanban-back-button {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .kanban-title {
+    font-size: 20px;
+  }
+
+  /* Columnas en vertical, ancho completo en móvil */
+  .kanban-board {
+    flex-direction: column;
+    gap: 12px;
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+
+  .kanban-column {
+    flex: 1 1 auto;
+    width: 100%;
+    max-height: none;
+    min-height: 200px;
+  }
+
+  .column-title {
+    font-size: 16px;
+  }
+
+  .candidate-card {
+    padding: 12px;
+  }
+
+  .candidate-name {
+    font-size: 15px;
+  }
+
+  .star {
+    font-size: 14px;
+  }
+
+  .score-text {
+    font-size: 13px;
+  }
+
+  /* Ajustar altura máxima del contenido de columna en móvil */
+  .column-content {
+    max-height: 400px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE: MOBILE PEQUEÑO (< 480px)
+   ======================================== */
+@media (max-width: 480px) {
+  .kanban-container {
+    padding: 8px;
+  }
+
+  .kanban-header {
+    gap: 12px;
+  }
+
+  .kanban-back-button {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .kanban-title {
+    font-size: 18px;
+  }
+
+  .kanban-column {
+    padding: 12px;
+  }
+
+  .column-header {
+    margin-bottom: 12px;
+  }
+
+  .candidate-card {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+/* ========================================
+   ACCESIBILIDAD
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles para navegación con teclado */
+.kanban-back-button:focus,
+.candidate-card:focus,
+.retry-button:focus {
+  outline: 3px solid #0066cc;
+  outline-offset: 2px;
+}
